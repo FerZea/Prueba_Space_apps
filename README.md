@@ -87,6 +87,14 @@ VITE_API_BASE=http://localhost:8000/api
 
 ---
 
+## 🌐 Fuentes de APIs y librerías externas
+
+- **NASA NEO API** → [https://api.nasa.gov/](https://api.nasa.gov/)  
+- **Cesium Ion (globo 3D)** → [https://cesium.com/platform/cesium-ion/](https://cesium.com/platform/cesium-ion/)  
+- **USGS ScienceBase (Python client)** → [https://github.com/DOI-USGS/sciencebasepy](https://github.com/DOI-USGS/sciencebasepy)  
+
+---
+
 ## 🛠️ Instalación
 
 ### Backend (FastAPI)

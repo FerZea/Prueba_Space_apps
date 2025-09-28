@@ -95,6 +95,21 @@ VITE_API_BASE=http://localhost:8000/api
 
 ---
 
+## ⬇️ Clonar el repositorio
+
+```bash
+# Clonar
+git clone https://github.com/tu-usuario/meteor-app.git
+cd meteor-app
+
+# Ver ramas disponibles
+git branch -a
+
+# Cambiar a main
+git checkout main
+
+---
+
 ## 🛠️ Instalación
 
 ### Backend (FastAPI)

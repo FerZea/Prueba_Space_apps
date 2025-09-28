@@ -12,15 +12,17 @@ export default function App() {
     try {
       const data = await simulateImpact(p)
       setGeojson(data)
-    } finally {
-      setBusy(false)
-    }
+    } finally { setBusy(false) }
   }
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '320px 1fr', height: '100vh' }}>
-      <Controls onRun={run} busy={busy} />
-      <CesiumGlobe geojson={geojson} />
+    <div className="layout">
+      <div className="sidebar">
+        <Controls onRun={run} busy={busy} />
+      </div>
+      <div className="globe">
+        <CesiumGlobe geojson={geojson} />
+      </div>
     </div>
   )
 }

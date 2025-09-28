@@ -107,7 +107,7 @@ git branch -a
 
 # Cambiar a main
 git checkout main
-
+```
 ---
 
 ## 🛠️ Instalación

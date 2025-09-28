@@ -8,9 +8,49 @@ Consume datos de **NASA NEO** y **USGS**.
 ## 📂 Estructura
 ```
 meteor-app/
-│── backend/    # API en FastAPI
-│── frontend/   # UI en React + Vite + Cesium
-│── README.md   # Este archivo
+│── backend/                         # API en FastAPI (Python)
+│   ├── app/
+│   │   ├── api/                     # Endpoints REST
+│   │   │   ├── __init__.py
+│   │   │   └── routes_simulation.py # Ruta POST /simulate/impact
+│   │   ├── clients/                 # Clientes a APIs externas
+│   │   │   ├── __init__.py
+│   │   │   ├── nasa_neo.py          # Cliente NASA NEO (httpx)
+│   │   │   └── usgs_client.py       # Cliente USGS (sciencebasepy)
+│   │   ├── domain/                  # Modelos y lógica de negocio
+│   │   │   ├── __init__.py
+│   │   │   ├── schemas.py           # Pydantic: entradas/salidas
+│   │   │   └── physics/
+│   │   │       ├── __init__.py
+│   │   │       └── impact.py        # Cálculos físicos (NumPy)
+│   │   ├── services/                # Orquestación de lógica
+│   │   │   ├── __init__.py
+│   │   │   └── simulation_service.py# Llama a domain + clients
+│   │   └── __init__.py
+│   ├── main.py                      # Punto de entrada FastAPI
+│   ├── requirements.txt             # Dependencias Python
+│   └── .venv/                       # Entorno virtual local
+│
+│── frontend/                        # UI en React + Vite + Cesium
+│   ├── public/
+│   │   └── cesium/                  # Assets de Cesium (copiados de node_modules)
+│   ├── src/
+│   │   ├── api/
+│   │   │   └── client.ts            # Cliente HTTP al backend
+│   │   ├── components/
+│   │   │   ├── CesiumGlobe.tsx      # Renderiza el globo y carga GeoJSON
+│   │   │   └── Controls.tsx         # Formulario de simulación
+│   │   ├── App.tsx                  # Layout principal (sidebar + globo)
+│   │   ├── main.tsx                 # Punto de entrada Vite
+│   │   └── styles.css               # Estilos globales
+│   ├── .env.example                 # Variables de entorno (plantilla)
+│   ├── package.json                 # Scripts npm (dev/build)
+│   ├── vite.config.ts               # Configuración Vite (proxy, Cesium)
+│   └── index.html                   # HTML base
+│
+│── README.md                        # Documentación principal
+│── .gitignore                       # Ignorar venv, node_modules, envs, etc.
+
 ```
 
 ---

@@ -1,207 +1,188 @@
-# 🚀 Meteor Impact App
+# 🛰️ Meteor Impact App
 
-Proyecto web para visualizar impactos de meteoritos usando **FastAPI (backend)** + **React + Vite + TypeScript + Cesium (frontend)**.  
-Consume datos de **NASA NEO** y **USGS**.
+Visualizador de impactos de meteoritos usando **FastAPI (backend)** + **React + Vite + TypeScript + Cesium (frontend)**, con datos de **NASA NEO** y **USGS**.
 
 ---
 
-## 📂 Estructura
+## 📦 Estructura del repositorio
+
 ```
 meteor-app/
-│── backend/                         # API en FastAPI (Python)
-│   ├── app/
-│   │   ├── api/                     # Endpoints REST
-│   │   │   ├── __init__.py
-│   │   │   └── routes_simulation.py # Ruta POST /simulate/impact
-│   │   ├── clients/                 # Clientes a APIs externas
-│   │   │   ├── __init__.py
-│   │   │   ├── nasa_neo.py          # Cliente NASA NEO (httpx)
-│   │   │   └── usgs_client.py       # Cliente USGS (sciencebasepy)
-│   │   ├── domain/                  # Modelos y lógica de negocio
-│   │   │   ├── __init__.py
-│   │   │   ├── schemas.py           # Pydantic: entradas/salidas
-│   │   │   └── physics/
-│   │   │       ├── __init__.py
-│   │   │       └── impact.py        # Cálculos físicos (NumPy)
-│   │   ├── services/                # Orquestación de lógica
-│   │   │   ├── __init__.py
-│   │   │   └── simulation_service.py# Llama a domain + clients
-│   │   └── __init__.py
-│   ├── main.py                      # Punto de entrada FastAPI
-│   ├── requirements.txt             # Dependencias Python
-│   └── .venv/                       # Entorno virtual local
+├─ backend/                              # API y lógica de simulación
+│  ├─ app/
+│  │  ├─ api/                            # Endpoints FastAPI
+│  │  ├─ clients/                        # Integraciones externas (NASA, USGS)
+│  │  ├─ domain/                         # Modelos y cálculos físicos (NumPy)
+│  │  ├─ services/                       # Orquestación de lógica
+│  │  └─ __init__.py
+│  ├─ main.py                            # Punto de entrada FastAPI
+│  ├─ requirements.txt                   # Dependencias Python
+│  ├─ .env                               # ⚠️ Variables reales (NO subir, está en .gitignore)
+│  └─ .env.example                       # ✅ Plantilla para el repo (sí subir)
 │
-│── frontend/                        # UI en React + Vite + Cesium
-│   ├── public/
-│   │   └── cesium/                  # Assets de Cesium (copiados de node_modules)
-│   ├── src/
-│   │   ├── api/
-│   │   │   └── client.ts            # Cliente HTTP al backend
-│   │   ├── components/
-│   │   │   ├── CesiumGlobe.tsx      # Renderiza el globo y carga GeoJSON
-│   │   │   └── Controls.tsx         # Formulario de simulación
-│   │   ├── App.tsx                  # Layout principal (sidebar + globo)
-│   │   ├── main.tsx                 # Punto de entrada Vite
-│   │   └── styles.css               # Estilos globales
-│   ├── .env.example                 # Variables de entorno (plantilla)
-│   ├── package.json                 # Scripts npm (dev/build)
-│   ├── vite.config.ts               # Configuración Vite (proxy, Cesium)
-│   └── index.html                   # HTML base
+├─ frontend/                             # UI en React + Vite + Cesium
+│  ├─ public/
+│  │  └─ cesium/                         # Assets copiados desde node_modules/cesium/Build/Cesium
+│  ├─ src/
+│  │  ├─ api/                            # Cliente HTTP al backend
+│  │  ├─ components/                     # Componentes React (Globo, Controles)
+│  │  ├─ App.tsx                         # Layout principal (sidebar + globo)
+│  │  ├─ main.tsx                        # Punto de entrada Vite
+│  │  └─ styles.css                      # Estilos globales
+│  ├─ .env.development                   # ⚠️ Local (no subir)
+│  ├─ .env.example                       # ✅ Plantilla (sí subir)
+│  ├─ package.json
+│  ├─ vite.config.ts
+│  └─ index.html
 │
-│── README.md                        # Documentación principal
-│── .gitignore                       # Ignorar venv, node_modules, envs, etc.
-
+├─ .gitignore                            # Ignora venv, node_modules, .env*
+└─ README.md                             # Documentación principal
 ```
 
----
-
-## 🛠️ Requisitos
-- Git
-- Python 3.10+
-- Node.js 18+
-- npm
+> 📌 **Regla**: `.env` y `.env.development` son privados → **no suben**.  
+> En cambio `.env.example` sí se sube como **plantilla** para guiar al resto del equipo.
 
 ---
 
 ## 🔑 Variables de entorno
 
-En `frontend/.env.development`(crealo en la otra seccion o edita .env.example para poner el token):
+### Backend (`backend/.env`)
 
-El token se consigue en: https://cesium.com/platform/cesium-ion/
+Debes crear un archivo `.env` dentro de la carpeta `backend/` con la configuración siguiente:
 
+```env
+# NASA API Key (obligatoria, consíguela en https://api.nasa.gov)
+NASA_API_KEY=tu_api_key_aqui
+
+# USGS (opcional, solo si necesitas endpoints privados)
+USGS_USERNAME=
+USGS_PASSWORD=
 ```
+
+⚠️ **No subas tu `.env` real a GitHub.** El archivo `.env` ya está en `.gitignore`.
+
+También debes crear un archivo de plantilla `backend/.env.example` con el contenido:
+
+```env
+NASA_API_KEY=your_api_key_here
+USGS_USERNAME=
+USGS_PASSWORD=
+```
+
+### Frontend (`frontend/.env.development`)
+
+Ejemplo de configuración para desarrollo:
+
+```env
 VITE_CESIUM_ION_TOKEN=TU_TOKEN_CESIUM_ION
 VITE_API_BASE=http://localhost:8000/api
 ```
 
-⚠️ **Nunca subas tu token real a GitHub.**  
-El archivo `.env` ya está en `.gitignore`.
+El archivo de plantilla `frontend/.env.example` debe contener:
+
+```env
+VITE_CESIUM_ION_TOKEN=your_cesium_token_here
+VITE_API_BASE=http://localhost:8000/api
+```
 
 ---
 
-## 🐍 Backend (FastAPI)
+## 🛠️ Instalación
 
-### Linux / Mac
+### Backend (FastAPI)
+
+**Linux / Mac**
 ```bash
 cd backend
 python -m venv .venv
 source .venv/bin/activate
-
 pip install -r requirements.txt
 uvicorn app.main:app --reload --port 8000
 ```
 
-### Windows (PowerShell)
+**Windows (PowerShell)**
 ```powershell
 cd backend
 python -m venv .venv
-
-# Activar venv
 .\.venv\Scripts\Activate.ps1
-# Si ves error de ejecución de scripts:
-# Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
-
-# Instalar dependencias
 pip install -r requirements.txt
-
-# Ejecutar servidor
 python -m uvicorn app.main:app --reload --port 8000
 ```
 
-Prueba:  
-👉 [http://localhost:8000/api/health](http://localhost:8000/api/health) → `{ "ok": true }`  
-👉 [http://localhost:8000/docs](http://localhost:8000/docs) → Swagger UI
+Probar:
+- Health:  http://localhost:8000/api/health
+- Docs:    http://localhost:8000/docs
 
----
+### Frontend (React + Vite + Cesium)
 
-## 💻 Frontend (React + TS + Cesium)
-
-### Linux / Mac
+**Linux / Mac**
 ```bash
 cd frontend
 cp .env.example .env.development
 npm install
-npm run dev
+npm run dev    # http://localhost:5173
 ```
 
-### Windows (PowerShell / CMD / Git Bash)
+**Windows (PowerShell / CMD / Git Bash)**
 ```powershell
 cd frontend
-# PowerShell
-Copy-Item .env.example .env.development
-# CMD clásico: copy .env.example .env.development
-# Git Bash: cp .env.example .env.development
-
-# Instalar dependencias (usa shx para copiar assets de Cesium en Windows)
+Copy-Item .env.example .env.development     # (CMD: copy ...)
 npm install
 npm run dev
 ```
 
-> ⚠️ Asegúrate de que en `src/main.tsx` exista:
-> ```ts
-> import 'cesium/Build/Cesium/Widgets/widgets.css';
-> ```
-
-Abrir 👉 [http://localhost:5173](http://localhost:5173)
+> En `src/main.tsx` debe existir:  
+> `import 'cesium/Build/Cesium/Widgets/widgets.css';`
 
 ---
 
-## 🌳 Flujo de trabajo con Git
+## 🧪 Flujo de trabajo con Git
 
-1. Clonar el repo:
-   ```bash
-   git clone https://github.com/TU_USUARIO/meteor-app.git
-   cd meteor-app
-   ```
+```bash
+# crear rama
+git checkout main
+git pull origin main
+git checkout -b feat/<nombre>
 
-2. Crear una rama de trabajo:
-   ```bash
-   git checkout main
-   git pull origin main
-   git checkout -b feat/<nombre-feature>
-   ```
+# commit y push
+git add .
+git commit -m "feat: descripción clara"
+git push -u origin feat/<nombre>
 
-3. Hacer cambios, luego:
-   ```bash
-   git add .
-   git commit -m "feat: descripción corta"
-   git push -u origin feat/<nombre-feature>
-   ```
+# abrir Pull Request en GitHub (base: main, compare: tu rama)
+```
 
-4. Abrir un Pull Request en GitHub (base: `main`, compare: tu rama).
-
-5. Al aprobarse, sincronizar:
-   ```bash
-   git checkout main
-   git pull origin main
-   ```
+Si el remoto tiene cambios: `git pull --rebase origin main` y resuelve conflictos.
 
 ---
 
-## 👥 Roles sugeridos
-- **Backend**
-  - API NASA/USGS
-  - Servicios y lógica de simulación
-  - Integración con frontend
-- **Frontend**
-  - Interfaz React + Cesium
-  - Panel de controles (formulario lat/lon/velocidad/diámetro)
-  - Visualización GeoJSON en el globo
+## 📚 Dependencias principales
+
+**Backend**
+- fastapi, uvicorn, httpx (NASA)
+- sciencebasepy (USGS)
+- numpy, pandas, shapely, pyproj
+- python-dotenv / pydantic-settings
+- pytest (dev)
+
+**Frontend**
+- react, vite, typescript
+- cesium (globo 3D)
+- shx (copiado cross‑platform de assets Cesium)
 
 ---
 
-## ⚠️ Problemas comunes
-- **`uvicorn: command not found`**  
-  - Activa venv e instala requirements.
-  - En Windows usa `python -m uvicorn` en vez de `uvicorn` directo.
+## 🐛 Problemas comunes
 
-- **Globo de Cesium se ve pequeño**  
-  - Falta importar los estilos base:
-    ```ts
-    import 'cesium/Build/Cesium/Widgets/widgets.css';
-    ```
+- **`uvicorn: command not found`** → activa venv o usa `python -m uvicorn`.- **Globo de Cesium pequeño/negro** → falta `widgets.css` o `public/cesium`.- **CORS** → el proxy de Vite apunta a `http://localhost:8000` (cambia `VITE_API_BASE` si es necesario).
 
-- **No carga el token**  
-  - Confirmar que está en `.env.development` y empieza con `VITE_`.
+---
+
+## 🧭 Diseño de capas (resumen)
+
+- `api/` → recibe requests y valida (Pydantic).  
+- `services/` → orquesta: llama a `clients/` y `domain/`.  
+- `domain/physics/` → cálculos con NumPy.  
+- `clients/` → acceso a APIs externas (NASA/USGS).
 
 ---

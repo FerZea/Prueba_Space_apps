@@ -95,58 +95,97 @@ VITE_API_BASE=http://localhost:8000/api
 
 ---
 
-## ⬇️ Clonar el repositorio
+## 🛠️ Instalación
 
+### Backend (FastAPI)
+
+#### Linux / macOS
+1. Crear entorno virtual e instalar dependencias:
 ```bash
-# Clonar
-git clone https://github.com/tu-usuario/meteor-app.git
-cd meteor-app
+cd backend
+python3 -m venv .venv
+source .venv/bin/activate
+cp .env.example .env
+pip install -r requirements.txt
+uvicorn app.main:app --reload --port 8000
+```
+2. Probar:  
+- Health: http://localhost:8000/api/health  
+- Docs: http://localhost:8000/docs  
 
-# Ver ramas disponibles
-git branch -a
+#### Windows
 
-# Cambiar a main
-git checkout main
+**PowerShell**
+```powershell
+cd backend
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+Copy-Item .env.example .env
+pip install -r requirements.txt
+python -m uvicorn app.main:app --reload --port 8000
+```
+
+**CMD**
+```bat
+cd backend
+python -m venv .venv
+.\.venv\Scriptsctivate.bat
+copy .env.example .env
+pip install -r requirements.txt
+python -m uvicorn app.main:app --reload --port 8000
+```
+
+**Git Bash**
+```bash
+cd backend
+python -m venv .venv
+source .venv/Scripts/activate
+cp .env.example .env
+pip install -r requirements.txt
+python -m uvicorn app.main:app --reload --port 8000
 ```
 
 ---
 
-## 🚀 Uso del proyecto
+### Frontend (React + Vite + Cesium)
 
-1. Configura las variables de entorno copiando las plantillas:
-
-```bash
-# Backend
-cp backend/.env.example backend/.env
-
-# Frontend
-cp frontend/.env.example frontend/.env.development
-```
-
-2. Instala y ejecuta el backend:
-
-```bash
-cd backend
-python -m venv .venv
-source .venv/bin/activate   # Linux/Mac
-# .\.venv\Scripts\Activate.ps1  # Windows PowerShell
-pip install -r requirements.txt
-uvicorn app.main:app --reload --port 8000
-```
-
-El backend corre en: **http://localhost:8000**  
-- Health check: http://localhost:8000/api/health  
-- Documentación Swagger: http://localhost:8000/docs  
-
-3. Instala y ejecuta el frontend:
-
+#### Linux / macOS
 ```bash
 cd frontend
+cp .env.example .env.development
+npm install
+npm run dev
+# abre http://localhost:5173
+```
+
+#### Windows (PowerShell / CMD / Git Bash)
+
+**PowerShell**
+```powershell
+cd frontend
+Copy-Item .env.example .env.development
 npm install
 npm run dev
 ```
 
-El frontend corre en: **http://localhost:5173**  
+**CMD**
+```bat
+cd frontend
+copy .env.example .env.development
+npm install
+npm run dev
+```
+
+**Git Bash**
+```bash
+cd frontend
+cp .env.example .env.development
+npm install
+npm run dev
+```
+
+> En `src/main.tsx` debe existir:  
+> `import 'cesium/Build/Cesium/Widgets/widgets.css';`
 
 ---
 
@@ -188,7 +227,13 @@ Si el remoto tiene cambios: `git pull --rebase origin main` y resuelve conflicto
 
 ## 🐛 Problemas comunes
 
-- **`uvicorn: command not found`** → activa venv o usa `python -m uvicorn`.- **Globo de Cesium pequeño/negro** → falta `widgets.css` o `public/cesium`.- **CORS** → el proxy de Vite apunta a `http://localhost:8000` (cambia `VITE_API_BASE` si es necesario).
+- **`uvicorn: command not found`** → activa venv o usa `python -m uvicorn`.  
+- **Globo de Cesium pequeño/negro** → falta `widgets.css` o `public/cesium`.  
+- **CORS** → el proxy de Vite apunta a `http://localhost:8000` (cambia `VITE_API_BASE` si es necesario).  
+- **Windows - error de scripts al activar venv** → ejecutar:  
+  ```powershell
+  Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+  ```
 
 ---
 

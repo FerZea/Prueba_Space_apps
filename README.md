@@ -99,7 +99,7 @@ VITE_API_BASE=http://localhost:8000/api
 
 ```bash
 # Clonar
-git clone https://github.com/tu-usuario/meteor-app.git
+git clone https://github.com/FerZea/Prueba_Space_apps.git
 cd meteor-app
 
 # Ver ramas disponibles

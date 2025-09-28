@@ -61,14 +61,6 @@ USGS_PASSWORD=
 
 ⚠️ **No subas tu `.env` real a GitHub.** El archivo `.env` ya está en `.gitignore`.
 
-También debes crear un archivo de plantilla `backend/.env.example` con el contenido:
-
-```env
-NASA_API_KEY=your_api_key_here
-USGS_USERNAME=
-USGS_PASSWORD=
-```
-
 ### Frontend (`frontend/.env.development`)
 
 Ejemplo de configuración para desarrollo:

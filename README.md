@@ -65,10 +65,14 @@ meteor-app/
 
 ## 🔑 Variables de entorno
 
-En `frontend/.env.development`:
+En `frontend/.env.development`(crealo en la otra seccion o edita .env.example para poner el token):
+
+El token se consigue en: https://cesium.com/platform/cesium-ion/
+
 ```
 VITE_CESIUM_ION_TOKEN=TU_TOKEN_CESIUM_ION
 VITE_API_BASE=http://localhost:8000/api
+
 ```
 
 ⚠️ **Nunca subas tu token real a GitHub.**  

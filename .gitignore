@@ -11,6 +11,7 @@ frontend/dist/
 *.env
 *.env.*
 !frontend/.env.example
+!backend/.env.example
 
 # Vite/Logs
 npm-debug.log*

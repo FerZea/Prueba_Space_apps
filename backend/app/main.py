@@ -13,16 +13,3 @@ app.add_middleware(
 )
 
 app.include_router(sim_router, prefix="/api/simulate", tags=["simulate"])
-
-@app.get("/api/health")
-def health():
-    return {"ok": True}
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(
-        "app.main:app",   # módulo:ruta_objeto
-        host="0.0.0.0",   # accesible desde red local
-        port=8000,        # puerto
-        reload=True       # autoreload en desarrollo
-    )

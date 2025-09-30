@@ -75,7 +75,7 @@ USGS_PASSWORD=
 
 ### Frontend (`frontend/.env.development`)
 
-El archivo de plantilla `frontend/.env.example` debe contener ocupas copiar y cambiarlo a `.env.development` debe de contener con tu token de cesium:
+En el archivo de plantilla `frontend/.env.example` ocupas copiar y cambiarlo a `.env.development` debe de contener con tu token de cesium lo siguiente:
 
 ```env
 VITE_CESIUM_ION_TOKEN=your_cesium_token_here

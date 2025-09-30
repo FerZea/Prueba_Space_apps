@@ -59,7 +59,8 @@ meteor-app/
 
 ### Backend (`backend/.env`)
 
-Debes crear un archivo `.env` dentro de la carpeta `backend/` con la configuración siguiente:
+TIENES QUE CREARLA USA `.env.example` como ejemplo y cambiale el nombre a `.env`  o 
+crea un archivo `.env` dentro de la carpeta `backend/` con la configuración siguiente:
 
 ```env
 # NASA API Key (obligatoria, consíguela en https://api.nasa.gov)

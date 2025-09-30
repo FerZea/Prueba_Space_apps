@@ -75,14 +75,7 @@ USGS_PASSWORD=
 
 ### Frontend (`frontend/.env.development`)
 
-Ejemplo de configuración para desarrollo:
-
-```env
-VITE_CESIUM_ION_TOKEN=TU_TOKEN_CESIUM_ION
-VITE_API_BASE=http://localhost:8000/api
-```
-
-El archivo de plantilla `frontend/.env.example` debe contener:
+El archivo de plantilla `frontend/.env.example` debe contener ocupas copiar y cambiarlo a `.env.development` debe de contener con tu token de cesium:
 
 ```env
 VITE_CESIUM_ION_TOKEN=your_cesium_token_here

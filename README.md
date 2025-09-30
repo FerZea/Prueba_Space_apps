@@ -229,12 +229,13 @@ Si el remoto tiene cambios: `git pull --rebase origin main` y resuelve conflicto
 - numpy, pandas, shapely, pyproj
 - python-dotenv / pydantic-settings
 - pytest (dev)
+- Tienes que descargar python y pip: https://www.python.org/downloads/ 
 
 **Frontend**
 - react, vite, typescript
 - cesium (globo 3D)
 - shx (copiado cross‑platform de assets Cesium)
-
+- Tienes que descargar node.js : https://nodejs.org/es/download
 ---
 
 ## 🐛 Problemas comunes
@@ -246,14 +247,4 @@ Si el remoto tiene cambios: `git pull --rebase origin main` y resuelve conflicto
   ```powershell
   Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
   ```
-
----
-
-## 🧭 Diseño de capas (resumen)
-
-- `api/` → recibe requests y valida (Pydantic).  
-- `services/` → orquesta: llama a `clients/` y `domain/`.  
-- `domain/physics/` → cálculos con NumPy.  
-- `clients/` → acceso a APIs externas (NASA/USGS).
-
 ---

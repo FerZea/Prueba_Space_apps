@@ -8,35 +8,46 @@ Visualizador de impactos de meteoritos usando **FastAPI (backend)** + **React + 
 
 ```
 meteor-app/
-├─ backend/                              # API y lógica de simulación
-│  ├─ app/
-│  │  ├─ api/                            # Endpoints FastAPI
-│  │  ├─ clients/                        # Integraciones externas (NASA, USGS)
-│  │  ├─ domain/                         # Modelos y cálculos físicos (NumPy)
-│  │  ├─ services/                       # Orquestación de lógica
-│  │  └─ __init__.py
-│  ├─ main.py                            # Punto de entrada FastAPI
-│  ├─ requirements.txt                   # Dependencias Python
-│  ├─ .env                               # ⚠️ Variables reales (NO subir, está en .gitignore)
-│  └─ .env.example                       # ✅ Plantilla para el repo (sí subir)
+├── backend/               # API en FastAPI
+│   ├── app/               # Lógica del backend
+│   │   ├── api/           # Rutas de la API (endpoints)
+│   │   │   └── routes_simulation.py   # Rutas de simulación (POST /impact)
+│   │   ├── clients/       # Clientes externos (NASA, USGS, etc.)
+│   │   │   ├── nasa_client.py        # Cliente para la API de NASA NEO
+│   │   │   └── usgs_client.py        # Cliente para la API de USGS
+│   │   ├── core/          # Configuración y variables de entorno
+│   │   │   └── config.py            # Configuración usando pydantic-settings
+│   │   ├── domain/        # Lógica de negocios (cálculos y reglas)
+│   │   │   ├── physics/  # Cálculos de física (energía, radios de daño)
+│   │   │   │   └── impact.py          # Cálculos de impacto y zonas de daño
+│   │   │   └── schemas.py  # Esquemas de entrada y salida (SimInput, SimResult)
+│   │   ├── services/      # Lógica de orquestación entre los diferentes componentes
+│   │   │   └── simulation_service.py    # Servicio que coordina cálculos y llamadas API
+│   │   └── main.py        # Punto de entrada de la API (FastAPI)
+│   ├── requirements.txt   # Dependencias del backend
+│   ├── .env               # Variables de entorno locales (no subir)
+│   └── .env.example       # Plantilla para .env (sí subir)
 │
-├─ frontend/                             # UI en React + Vite + Cesium
-│  ├─ public/
-│  │  └─ cesium/                         # Assets copiados desde node_modules/cesium/Build/Cesium
-│  ├─ src/
-│  │  ├─ api/                            # Cliente HTTP al backend
-│  │  ├─ components/                     # Componentes React (Globo, Controles)
-│  │  ├─ App.tsx                         # Layout principal (sidebar + globo)
-│  │  ├─ main.tsx                        # Punto de entrada Vite
-│  │  └─ styles.css                      # Estilos globales
-│  ├─ .env.development                   # ⚠️ Local (no subir)
-│  ├─ .env.example                       # ✅ Plantilla (sí subir)
-│  ├─ package.json
-│  ├─ vite.config.ts
-│  └─ index.html
+├── frontend/              # Interfaz de usuario en React
+│   ├── public/            # Archivos públicos (favicon, cesium)
+│   │   └── cesium/        # Archivos estáticos de Cesium
+│   ├── src/               # Código fuente del frontend
+│   │   ├── components/    # Componentes de React
+│   │   │   ├── CesiumGlobe.tsx    # Componente que muestra el globo Cesium
+│   │   │   └── Controls.tsx       # Componente para los controles (input de usuario)
+│   │   ├── api/           # Clientes para interactuar con la API del backend
+│   │   │   └── client.ts  # Funciones para enviar datos al backend (simulateImpact)
+│   │   ├── App.tsx        # Componente principal (inicia la aplicación)
+│   │   ├── main.tsx       # Punto de entrada (renderiza <App /> y configura Vite)
+│   │   ├── styles.css     # Estilos generales
+│   │   └── vite.config.ts # Configuración de Vite
+│   ├── .env.development   # Variables de entorno para desarrollo
+│   ├── .env.example       # Plantilla para .env (sí subir)
+│   ├── package.json       # Dependencias del frontend
+│   └── index.html         # Plantilla HTML base
 │
-├─ .gitignore                            # Ignora venv, node_modules, .env*
-└─ README.md                             # Documentación principal
+├── .gitignore             # Archivos y carpetas ignoradas por Git
+└── README.md              # Documentación del proyecto
 ```
 
 > 📌 **Regla**: `.env` y `.env.development` son privados → **no suben**.  
